@@ -3,6 +3,7 @@
 
 import { useCart } from "@/context/CartContext";
 import { ProductCart } from "@/component/ProductCart";
+import Link from "next/link";
 
 
 
@@ -14,6 +15,10 @@ export default function CartPage() {
 
     return (
         <div className="flex gap-2">
+            <Link href="/" className="flex gap-5 big colour:red ">back to the page
+
+            </Link>
+
             {cartItems.map((item) => {
 
 

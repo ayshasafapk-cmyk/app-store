@@ -2,6 +2,7 @@
 
 import { ShoppingCart } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import Link from "next/link";
 
 export default function Header() {
     const { cartItems } = useCart();
@@ -10,15 +11,25 @@ export default function Header() {
 
 
 
-    return (
-        <div className="flex justify-start">
-            <h1 className="text-4x1 front-bold p-2 text-yellow-798">E-commerse</h1>
-            <div className="flex p-5">
 
-                <ShoppingCart />
-                <p>{cartItems.length}</p>
+
+
+    return (
+
+        <Link href="/cart">
+
+
+
+
+            <div className="flex justify-start">
+                <h1 className="text-4x1 front-bold p-2 text-yellow-798">E-commerse</h1>
+                <div className="flex p-5">
+
+                    <ShoppingCart />
+                    <p>{cartItems.length}</p>
+                </div>
             </div>
-        </div>
+        </Link>
 
     );
 }
