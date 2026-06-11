@@ -2,6 +2,7 @@ import { createClient } from "@/utils/supabase/server";
 import { Plus } from "lucide-react";
 import { cookies } from "next/headers";
 import Link from "next/link";
+import { ProductCart } from "@/component/ProductCart";
 
 export default async function ProductsPage() {
   const cookieStore = await cookies();
@@ -43,26 +44,13 @@ export default async function ProductsPage() {
             .getPublicUrl(product.image_path);
 
           return (
-            <div
-              key={product.id}
-              className="group rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 overflow-hidden hover:shadow-xl dark:hover:shadow-black/40 transition-all duration-200"
-            >
-              <div className="overflow-hidden bg-gray-100 dark:bg-gray-800">
-                <img
-                  src={imgData.publicUrl}
-                  alt={product.title}
-                  className="w-full h-52 object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-              <div className="p-4">
-                <h2 className="font-semibold text-gray-900 dark:text-white truncate">
-                  {product.title}
-                </h2>
-                <p className="text-emerald-600 dark:text-emerald-400 font-bold mt-1">
-                  ${Number(product.price).toFixed(2)}
-                </p>
-              </div>
-            </div>
+            <ProductCart
+              id={product.id}
+              image_url={imgData.publicUrl}
+              title={product.title}
+              price={product.price}
+            />
+
           );
         })}
       </div>
