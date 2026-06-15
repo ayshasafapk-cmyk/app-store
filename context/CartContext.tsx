@@ -1,9 +1,9 @@
 
 "use client";
 
-import { createContext, ReactNode, useContext, useState } from "react";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 
-type Product = {
+export type Product = {
     id: number,
     name: string,
     price: number
@@ -14,6 +14,7 @@ type Product = {
 
 type CartContextType = {
     cartItems: Product[];
+    addToCart: (product: Product) => void;
 
 };
 
@@ -22,20 +23,43 @@ interface CartProviderProps {
 }
 const CartContext = createContext<CartContextType | null>(null);
 
+const STORAGE_KEY = "CART_ITEMS";
+
 export function CartProvider({ children }: CartProviderProps) {
-    const sampleProducts: Product[] = [
-        {
-            id: 100,
-            name: "Jackets",
-            price: 200,
-            image_path: "products/jacket.jpg"
-        },
-    ];
-    const [cartItems, setCartItems] = useState<Product[]>(sampleProducts)
+
+    const [cartItems, setItems] = useState<Product[]>(() => {
+        if (typeof window === "undefined") return [];
+        try {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            return stored ? JSON.parse(stored) : [];
+        } catch {
+            return [];
+        }
+    });
+
+
+
+
+
+
+
+
+
+    useEffect(() => {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(cartItems));
+    }, [cartItems])
+
+    function addToCart(product: Product) {
+        setItems([...cartItems, product]);
+    }
+
+
+
 
     return <CartContext.Provider
         value={{
             cartItems,
+            addToCart
         }}
 
     >
